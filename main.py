@@ -56,4 +56,11 @@ class HSPConnector:
 
     def parse_response(self):
         if 200 <= self.response.status_code < 300:
-            return self.response.json()
+            data = self.response.json()
+            for some_data in self.response.json():
+                if 'msgid' in some_data.keys():
+                    self.msgid = some_data['msgid']
+                    return self.msgid
+            raise ConnectionError('MSGID not found')
+        else:
+            raise ConnectionError('Error code responded')
