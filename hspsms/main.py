@@ -23,7 +23,7 @@ class HSPConnector:
         self.sender = sender
         self.sms_type = smstype
 
-    def send_request(self, url: str):
+    def __send_request(self, url: str):
         import requests
 
         self.response = requests.get(url)
@@ -32,7 +32,7 @@ class HSPConnector:
                  scheduled: str = None):
         from urllib import parse
 
-        url = 'sendSMS'
+        endpoint = 'sendSMS'
 
         params = {self.key_username: self.username, self.key_api: self.api_key, self.key_message: message,
                   self.key_sendername: sendername or self.sender, self.key_smstype: smstype or self.sms_type}
@@ -40,10 +40,10 @@ class HSPConnector:
         if scheduled:
             params[self.key_scheduled] = scheduled
 
-        self.send_request(self.base_url + url + self.key_query + parse.urlencode(params) + '&' + self.key_numbers + '='
-                          + ','.join(recipient))
+        self.__send_request(self.base_url + endpoint + self.key_query + parse.urlencode(params) + '&' + self.key_numbers
+                            + '=' + ','.join(recipient))
 
-        return self.parse_response()
+        return self.__parse_response()
 
     def delivery_report(self, msgid: str):
         from urllib import parse
@@ -52,11 +52,11 @@ class HSPConnector:
 
         params = {self.key_username: self.username, self.key_api: self.api_key, self.key_msgid: msgid}
 
-        self.send_request(self.base_url + url + self.key_query + parse.urlencode(params))
+        self.__send_request(self.base_url + url + self.key_query + parse.urlencode(params))
 
-        return self.parse_response()
+        return self.__parse_response()
 
-    def parse_response(self):
+    def __parse_response(self):
         import logging
 
         logger = logging.getLogger(__name__)
