@@ -1,4 +1,4 @@
-# Django REST Framework Add Ons
+# HSP SMS API
 
 **API Integration of [HSPSMS](http://sms.hspsms.com)**<br>
 
