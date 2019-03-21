@@ -3,6 +3,6 @@ from .main import HSPConnector
 name = "hspsms"
 
 __title__ = 'HSPSMS'
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 __author__ = 'Civil Machines Technologies Private Limited'
 __license__ = 'GPLv3'

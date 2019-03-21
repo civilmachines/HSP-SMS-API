@@ -28,20 +28,24 @@ class HSPConnector:
 
         self.response = requests.get(url)
 
-    def send_sms(self, recipient: list, message: str, sendername: str = None, smstype: str = None,
+    def send_sms(self, recipient: list, message: str, sendername: str = None,
+                 smstype: str = None,
                  scheduled: str = None):
         from urllib import parse
 
         endpoint = 'sendSMS'
 
-        params = {self.key_username: self.username, self.key_api: self.api_key, self.key_message: message,
-                  self.key_sendername: sendername or self.sender, self.key_smstype: smstype or self.sms_type}
+        params = {self.key_username: self.username,
+                  self.key_api: self.api_key, self.key_message: message,
+                  self.key_sendername: sendername or self.sender,
+                  self.key_smstype: smstype or self.sms_type}
 
         if scheduled:
             params[self.key_scheduled] = scheduled
 
-        self.__send_request(self.base_url + endpoint + self.key_query + parse.urlencode(params) + '&' + self.key_numbers
-                            + '=' + ','.join(recipient))
+        self.__send_request(self.base_url + endpoint + self.key_query +
+                            parse.urlencode(params) + '&' + self.key_numbers +
+                            '=' + ','.join(recipient))
 
         return self.__parse_response()
 
@@ -50,9 +54,12 @@ class HSPConnector:
 
         url = 'getDLR'
 
-        params = {self.key_username: self.username, self.key_api: self.api_key, self.key_msgid: msgid}
+        params = {self.key_username: self.username,
+                  self.key_api: self.api_key, self.key_msgid: msgid}
 
-        self.__send_request(self.base_url + url + self.key_query + parse.urlencode(params))
+        self.__send_request(self.base_url + url +
+                            self.key_query +
+                            parse.urlencode(params))
 
         return self.__parse_response()
 
@@ -67,10 +74,12 @@ class HSPConnector:
                 if 'msgid' in some_data.keys():
                     self.msgid = some_data['msgid']
                     return self.msgid
-            logger.error('MSGID was not found! ' + str(self.response.text) + '. Status Code: '
-                         + str(self.response.status_code))
+            logger.error('MSGID was not found! ' +
+                         str(self.response.text) +
+                         '. Status Code: ' + str(self.response.status_code))
             raise ConnectionError('MSGID not found')
         else:
-            logger.error('MSGID was not found! ' + str(self.response.text) + '. Status Code: '
-                         + str(self.response.status_code))
+            logger.error('MSGID was not found! ' +
+                         str(self.response.text) +
+                         '. Status Code: ' + str(self.response.status_code))
             raise ConnectionError('Error code responded')
