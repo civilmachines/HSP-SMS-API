@@ -1,5 +1,4 @@
 class HSPConnector:
-
     base_url = "http://sms.hspsms.com/"
     key_username = 'username'
     key_api = 'apikey'

@@ -12,7 +12,7 @@ class DjangoSendSMSBackend(BaseSmsBackend):
         from django.conf import settings
         from django.core.exceptions import ImproperlyConfigured
 
-        from .main import HSPConnector
+        from . import HSPConnector
 
         super(DjangoSendSMSBackend, self).__init__(fail_silently=fail_silently,
                                                    **kwargs)
